@@ -9,8 +9,7 @@ use icrate::AppKit::{
     NSOpenGLPFAColorFloat, NSOpenGLPFAColorSize, NSOpenGLPFADepthSize, NSOpenGLPFADoubleBuffer,
     NSOpenGLPFAMinimumPolicy, NSOpenGLPFAMultisample, NSOpenGLPFAOpenGLProfile,
     NSOpenGLPFASampleBuffers, NSOpenGLPFASamples, NSOpenGLPFAStencilSize, NSOpenGLPFAStereo,
-    NSOpenGLPFATripleBuffer, NSOpenGLPixelFormatAttribute, NSOpenGLProfileVersion3_2Core,
-    NSOpenGLProfileVersion4_1Core, NSOpenGLProfileVersionLegacy,
+    NSOpenGLPFATripleBuffer, NSOpenGLPixelFormatAttribute, NSOpenGLProfileVersionLegacy,
 };
 use objc2::rc::Id;
 
@@ -98,16 +97,14 @@ impl Display {
         // Stash profile pos for latter insert.
         let profile_attr_pos = attrs.len();
         // Add place holder for the GL profile.
-        attrs.push(NSOpenGLProfileVersion4_1Core);
+        attrs.push(NSOpenGLProfileVersionLegacy);
 
         // Terminate attrs with zero.
         attrs.push(0);
 
         // Automatically pick the latest profile.
         let raw = [
-            NSOpenGLProfileVersion4_1Core,
-            NSOpenGLProfileVersion3_2Core,
-            NSOpenGLProfileVersionLegacy,
+            NSOpenGLProfileVersionLegacy
         ]
         .into_iter()
         .find_map(|profile| {
