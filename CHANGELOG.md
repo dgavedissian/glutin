@@ -1,5 +1,13 @@
 # Unreleased
 
+# Version 0.32.0
+
+- **Breaking:** updated `raw-window-handle` dependency to `0.6`.
+- Bump MSRV from `1.65` to `1.70`.
+- Bump `windows-sys` from `0.48.0` to `0.52.0`.
+- Expose `Egl` and `Glx` raw API functions on `Egl` and `Glx` displays.
+- Add `GLUTIN_WGL_OPENGL_DLL` environment variable to change OpenGL provider name with WGL.
+
 # Version 0.31.3
 
 - Change `Surface` to be `Send`. This makes it consistent with the context, so now they are both `Send` but not `Sync`.

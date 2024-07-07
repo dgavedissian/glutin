@@ -44,12 +44,9 @@ impl Display {
     ) -> Result<Self> {
         // Don't load GLX when unsupported platform was requested.
         let (display, screen) = match display {
-            RawDisplayHandle::Xlib(handle) => {
-                if handle.display.is_null() {
-                    return Err(ErrorKind::BadDisplay.into());
-                }
-
-                (GlxDisplay(handle.display as *mut _), handle.screen as i32)
+            RawDisplayHandle::Xlib(handle) => match handle.display {
+                Some(display) => (GlxDisplay(display.as_ptr() as *mut _), handle.screen as i32),
+                None => return Err(ErrorKind::BadDisplay.into()),
             },
             _ => {
                 return Err(
@@ -111,6 +108,11 @@ impl Display {
         });
 
         Ok(Self { inner })
+    }
+
+    /// Get a reference to the initialized GLX API.
+    pub fn glx(&self) -> &'static Glx {
+        self.inner.glx
     }
 
     fn extract_display_features(
